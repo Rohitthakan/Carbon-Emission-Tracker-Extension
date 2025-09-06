@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Carbon Emissions Dashboard</title>
+  <link rel="stylesheet" href="dashboard.css">
+</head>
+<body>
+  <div class="container">
+    <header>
+      <div class="header-content">
+        <div class="logo">
+          <span class="eco-icon">🌱</span>
+          <h1>Carbon Emissions Dashboard</h1>
+        </div>
+        <div class="header-stats">
+          <div class="header-stat">
+            <span class="stat-value" id="totalEmissions">0</span>
+            <span class="stat-label">Total CO₂ (g)</span>
+          </div>
+          <div class="header-stat">
+            <span class="stat-value" id="sitesVisited">0</span>
+            <span class="stat-label">Sites Visited</span>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <div class="dashboard-grid">
+        <!-- Daily Emissions Chart -->
+        <div class="card">
+          <div class="card-header">
+            <h2>📈 Daily Emissions Trend</h2>
+            <p>Track your carbon footprint over time</p>
+          </div>
+          <div class="card-content">
+            <canvas id="dailyChart" width="400" height="200"></canvas>
+          </div>
+        </div>
+
+        <!-- Top Emitting Sites -->
+        <div class="card">
+          <div class="card-header">
+            <h2>🏭 Top Emitting Sites</h2>
+            <p>Sites contributing most to your carbon footprint</p>
+          </div>
+          <div class="card-content">
+            <div id="topSitesList"></div>
+          </div>
+        </div>
+
+        <!-- Website Categories -->
+        <div class="card">
+          <div class="card-header">
+            <h2>📊 Emissions by Category</h2>
+            <p>Breakdown of emissions by website type</p>
+          </div>
+          <div class="card-content">
+            <canvas id="categoryChart" width="400" height="200"></canvas>
+          </div>
+        </div>
+
+        <!-- Green Recommendations -->
+        <div class="card">
+          <div class="card-header">
+            <h2>🌿 Sustainability Recommendations</h2>
+            <p>Ways to reduce your digital carbon footprint</p>
+          </div>
+          <div class="card-content">
+            <div id="recommendationsList"></div>
+          </div>
+        </div>
+
+        <!-- Recent Activity -->
+        <div class="card full-width">
+          <div class="card-header">
+            <h2>📋 Recent Browsing Activity</h2>
+            <p>Your latest website visits and their emissions</p>
+          </div>
+          <div class="card-content">
+            <div class="table-container">
+              <table id="activityTable">
+                <thead>
+                  <tr>
+                    <th>Time</th>
+                    <th>Website</th>
+                    <th>Category</th>
+                    <th>Emissions (g CO₂)</th>
+                    <th>Impact Level</th>
+                  </tr>
+                </thead>
+                <tbody id="activityTableBody">
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- Carbon Footprint Comparison -->
+        <div class="card">
+          <div class="card-header">
+            <h2>🌍 Impact Comparison</h2>
+            <p>Put your emissions in perspective</p>
+          </div>
+          <div class="card-content">
+            <div id="comparisonContent"></div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script src="dashboard.js"></script>
+</body>
+</html>

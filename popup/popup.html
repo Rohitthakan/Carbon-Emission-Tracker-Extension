@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Carbon Emissions Tracker</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <div class="container">
+    <header>
+      <div class="logo">
+        <span class="eco-icon">🌱</span>
+        <h1>Carbon Tracker</h1>
+      </div>
+    </header>
+    
+    <main>
+      <div class="emissions-summary">
+        <div class="stat-card">
+          <span class="stat-value" id="todayEmissions">0</span>
+          <span class="stat-label">g CO₂ Today</span>
+        </div>
+        <div class="stat-card">
+          <span class="stat-value" id="totalEmissions">0</span>
+          <span class="stat-label">g CO₂ Total</span>
+        </div>
+      </div>
+      
+      <div class="current-site">
+        <h3>Current Site Impact</h3>
+        <div class="site-info">
+          <span class="site-name" id="currentSite">Loading...</span>
+          <span class="site-emissions" id="currentEmissions">0g CO₂</span>
+          <div class="emission-level" id="emissionLevel">
+            <div class="level-indicator"></div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="recommendations">
+        <h3>Green Alternatives</h3>
+        <div id="recommendations">
+          <p class="loading">Analyzing current site...</p>
+        </div>
+      </div>
+      
+      <div class="actions">
+        <button id="viewDashboard" class="btn btn-primary">
+          📊 View Dashboard
+        </button>
+        <button id="clearData" class="btn btn-secondary">
+          🗑️ Clear Data
+        </button>
+      </div>
+    </main>
+  </div>
+  
+  <script src="popup.js"></script>
+</body>
+</html>

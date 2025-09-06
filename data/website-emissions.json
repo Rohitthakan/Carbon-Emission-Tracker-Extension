@@ -1,0 +1,37 @@
+{
+  "emissionFactors": {
+    "default": 11,
+    "video": 50,
+    "images": 8,
+    "search": 1,
+    "news": 3,
+    "ecommerce": 5,
+    "social": 6,
+    "streaming": 45
+  },
+  "greenAlternatives": {
+    "google.com": {
+      "alternative": "ecosia.org",
+      "description": "Plants trees with your searches",
+      "emissionReduction": 80
+    },
+    "youtube.com": {
+      "alternative": "peertube instances",
+      "description": "Decentralized video platform",
+      "emissionReduction": 60
+    },
+    "facebook.com": {
+      "alternative": "mastodon.social",
+      "description": "Decentralized social network",
+      "emissionReduction": 70
+    }
+  },
+  "websiteCategories": {
+    "video": ["youtube", "netflix", "twitch", "vimeo", "dailymotion"],
+    "social": ["facebook", "instagram", "twitter", "linkedin", "snapchat"],
+    "ecommerce": ["amazon", "ebay", "shopify", "etsy", "alibaba"],
+    "search": ["google", "bing", "duckduckgo", "yahoo"],
+    "news": ["cnn", "bbc", "reddit", "hackernews", "medium"],
+    "streaming": ["spotify", "soundcloud", "pandora", "deezer"]
+  }
+}
