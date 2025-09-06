@@ -35,3 +35,19 @@ This extension calculates emissions in real time as you browse and helps you mak
 ```bash
 git clone https://Rohitthakan/carbon-emissions-tracker.git
 cd carbon-emissions-tracker
+```
+
+### 2. Load Extension in Chrome
+Open Google Chrome and go to:
+- chrome://extensions/
+- Enable Developer mode (toggle in the top right corner).
+- Select the project folder you just cloned.
+- The extension will now appear in your Chrome toolbar 🎉.
+
+### 3. Test the Extension
+Open the extension popup to view:
+- 📊 Current session emissions
+- 🕒 All-time emissions history
+- 🌱 Website categorization (Green, Semi-Green, Non-Green)
+
+Try visiting heavy websites (e.g., video streaming, image-heavy sites) vs lightweight websites to see the difference.

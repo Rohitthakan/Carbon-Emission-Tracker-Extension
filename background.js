@@ -1,7 +1,5 @@
-// Background script for Carbon Emissions Tracker
 let sessionData = {};
 
-// Initialize extension
 chrome.runtime.onInstalled.addListener(() => {
   chrome.storage.local.set({
     totalEmissions: 0,
@@ -14,14 +12,12 @@ chrome.runtime.onInstalled.addListener(() => {
   });
 });
 
-// Listen for tab updates
 chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
   if (changeInfo.status === 'complete' && tab.url) {
     trackPageLoad(tab.url, tabId);
   }
 });
 
-// Listen for tab activation
 chrome.tabs.onActivated.addListener((activeInfo) => {
   chrome.tabs.get(activeInfo.tabId, (tab) => {
     if (tab.url) {
@@ -30,13 +26,11 @@ chrome.tabs.onActivated.addListener((activeInfo) => {
   });
 });
 
-// Track page load and calculate emissions
 async function trackPageLoad(url, tabId) {
   try {
     const domain = new URL(url).hostname;
     const emissions = calculateEmissions(domain, url);
     
-    // Store session data
     if (!sessionData[tabId]) {
       sessionData[tabId] = [];
     }
@@ -50,10 +44,8 @@ async function trackPageLoad(url, tabId) {
     
     sessionData[tabId].push(visitData);
     
-    // Update storage
     updateEmissionsData(visitData);
-    
-    // Update badge
+
     updateBadge(emissions);
     
   } catch (error) {
@@ -61,18 +53,14 @@ async function trackPageLoad(url, tabId) {
   }
 }
 
-// Calculate emissions based on domain and data transfer
 function calculateEmissions(domain, url) {
-  // Base emission factors (grams CO2 per MB)
-  const baseEmissionFactor = 11; // 11g CO2 per MB as mentioned in problem
+  const baseEmissionFactor = 11; 
   
-  // Estimate page size based on domain type
   let estimatedSizeMB = getEstimatedPageSize(domain);
   
-  // Calculate emissions
   const emissions = estimatedSizeMB * baseEmissionFactor;
   
-  return Math.round(emissions * 100) / 100; // Round to 2 decimal places
+  return Math.round(emissions * 100) / 100; 
 }
 
 // Estimate page size based on domain characteristics
@@ -96,18 +84,15 @@ function getEstimatedPageSize(domain) {
   return baseSizeMB;
 }
 
-// Update emissions data in storage
 async function updateEmissionsData(visitData) {
   const result = await chrome.storage.local.get(['totalEmissions', 'visitedSites', 'dailyEmissions']);
   
   const newTotalEmissions = (result.totalEmissions || 0) + visitData.emissions;
   const visitedSites = result.visitedSites || [];
   const dailyEmissions = result.dailyEmissions || {};
-  
-  // Add to visited sites
+
   visitedSites.push(visitData);
-  
-  // Update daily emissions
+
   const today = new Date().toDateString();
   dailyEmissions[today] = (dailyEmissions[today] || 0) + visitData.emissions;
   
@@ -123,7 +108,6 @@ async function updateEmissionsData(visitData) {
   });
 }
 
-// Update extension badge
 function updateBadge(emissions) {
   const badgeText = emissions > 1000 ? '1k+' : emissions.toString();
   chrome.action.setBadgeText({ text: badgeText });
@@ -137,7 +121,6 @@ function getEmissionColor(emissions) {
   return '#F44336'; // Red
 }
 
-// Listen for messages from popup
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
   if (request.action === 'getSessionData') {
     sendResponse({ sessionData });

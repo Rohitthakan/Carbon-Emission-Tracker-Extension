@@ -5,29 +5,24 @@ document.addEventListener('DOMContentLoaded', async () => {
 
 async function loadPopupData() {
   try {
-    // Get stored data
     const result = await chrome.storage.local.get([
       'totalEmissions', 
       'dailyEmissions', 
       'visitedSites'
     ]);
     
-    // Update total emissions
     const totalEmissions = result.totalEmissions || 0;
     document.getElementById('totalEmissions').textContent = Math.round(totalEmissions);
     
-    // Update today's emissions
     const today = new Date().toDateString();
     const todayEmissions = result.dailyEmissions?.[today] || 0;
     document.getElementById('todayEmissions').textContent = Math.round(todayEmissions);
     
-    // Get current tab info
     const tabs = await chrome.tabs.query({ active: true, currentWindow: true });
     if (tabs[0]) {
       await updateCurrentSiteInfo(tabs[0]);
     }
     
-    // Generate recommendations
     generateRecommendations(result.visitedSites || []);
     
   } catch (error) {
@@ -40,14 +35,11 @@ async function updateCurrentSiteInfo(tab) {
     const url = new URL(tab.url);
     const domain = url.hostname;
     
-    // Update site name
     document.getElementById('currentSite').textContent = domain;
     
-    // Calculate estimated emissions for current site
     const emissions = estimateSiteEmissions(domain);
     document.getElementById('currentEmissions').textContent = `${emissions}g CO₂`;
-    
-    // Update emission level indicator
+
     updateEmissionLevelIndicator(emissions);
     
   } catch (error) {
@@ -57,7 +49,7 @@ async function updateCurrentSiteInfo(tab) {
 }
 
 function estimateSiteEmissions(domain) {
-  let sizeMB = 2.5; // Default size
+  let sizeMB = 2.5; 
   
   // Video streaming sites
   if (domain.includes('youtube') || domain.includes('netflix') || 
@@ -106,7 +98,6 @@ function updateEmissionLevelIndicator(emissions) {
 function generateRecommendations(visitedSites) {
   const recommendationsDiv = document.getElementById('recommendations');
   
-  // Get current tab domain
   chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
     if (tabs[0]) {
       try {
@@ -169,22 +160,18 @@ function getGreenAlternatives(domain) {
 }
 
 function setupEventListeners() {
-  // View Dashboard button
   document.getElementById('viewDashboard').addEventListener('click', () => {
     chrome.tabs.create({ url: chrome.runtime.getURL('dashboard/dashboard.html') });
     window.close();
   });
   
-  // Clear Data button
   document.getElementById('clearData').addEventListener('click', async () => {
     if (confirm('Are you sure you want to clear all tracking data?')) {
       await chrome.storage.local.clear();
       
-      // Reset display
       document.getElementById('totalEmissions').textContent = '0';
       document.getElementById('todayEmissions').textContent = '0';
       
-      // Send message to background script
       chrome.runtime.sendMessage({ action: 'clearData' });
       
       alert('Data cleared successfully!');

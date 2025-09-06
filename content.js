@@ -1,11 +1,9 @@
-// Content script for Carbon Emissions Tracker
 (function() {
   'use strict';
   
   let pageLoadStartTime = performance.now();
   let dataTransferred = 0;
   
-  // Monitor network requests
   const observer = new PerformanceObserver((list) => {
     for (const entry of list.getEntries()) {
       if (entry.transferSize) {
@@ -15,8 +13,7 @@
   });
   
   observer.observe({ entryTypes: ['resource'] });
-  
-  // Send data transfer info to background script
+
   window.addEventListener('beforeunload', () => {
     const loadTime = performance.now() - pageLoadStartTime;
     const dataInMB = dataTransferred / (1024 * 1024);
@@ -31,7 +28,6 @@
     });
   });
   
-  // Inject emission indicator (optional visual feedback)
   function injectEmissionIndicator() {
     if (document.getElementById('carbon-emission-indicator')) return;
     
@@ -53,7 +49,6 @@
     
     document.body.appendChild(indicator);
     
-    // Show briefly when page loads
     setTimeout(() => {
       const emissions = estimatePageEmissions();
       indicator.textContent = `~${emissions}g CO₂`;
@@ -67,7 +62,7 @@
   
   function estimatePageEmissions() {
     const domain = window.location.hostname;
-    let sizeMB = 2.5; // Default
+    let sizeMB = 2.5; 
     
     if (domain.includes('youtube') || domain.includes('video')) sizeMB = 50;
     else if (domain.includes('instagram') || domain.includes('pinterest')) sizeMB = 8;
@@ -75,8 +70,7 @@
     
     return Math.round(sizeMB * 11);
   }
-  
-  // Initialize when DOM is ready
+
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', injectEmissionIndicator);
   } else {
